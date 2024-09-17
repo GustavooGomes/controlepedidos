@@ -1,3 +1,5 @@
+const productImageUrl = (referenceCode) => `https://altenburg-images.s3.sa-east-1.amazonaws.com/FOTOS_SITE/${referenceCode}-1.jpg`;
+
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('products.json');
@@ -33,6 +35,7 @@ async function searchProduct() {
         if (filteredProducts.length > 0) {
             productInfoDiv.innerHTML = '<h2 class="text-2xl font-semibold mb-4">Detalhes do Produto</h2>';
             filteredProducts.forEach(product => {
+                const imageUrl = productImageUrl(product['Produto-Derivação']);
                 productInfoDiv.innerHTML += `
                     <div class="product-details mb-4 p-4 border border-altenburg rounded">
                         <p><strong>Número do Pedido:</strong> ${product['Pedido']}</p>
@@ -42,9 +45,10 @@ async function searchProduct() {
                         <p><strong>Estoque:</strong> ${product['Estoque']}</p>
                         <p><strong>Situação:</strong> ${product['Desc.Situação']}</p>
                         <hr class="my-2">
-                        <Br>
-                        <p><strong>Depósito de Saída:</Strong> ${product['Depósito']}</p>
-                        <p><strong>Depósito de Destino:</Strong> F01.09E (E-Commerce)</p>
+                        <br>
+                        <p><strong>Depósito de Saída:</strong> ${product['Depósito']}</p>
+                        <p><strong>Depósito de Destino:</strong> F01.09E (E-Commerce)</p>
+                        <img src="${imageUrl}" alt="Imagem do Produto" class="product-image mt-4">
                     </div>
                 `;
             });
